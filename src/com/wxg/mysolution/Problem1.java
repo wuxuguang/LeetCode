@@ -18,7 +18,7 @@ public class Problem1 {
     	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
     	for(int i =0 ;i < numbers.length; i++){
     		Integer n = map.get(numbers[i]);
-    		if(n == null)
+    		if(n != null)
     			map.put(numbers[i], i);
     		n = map.get(target - numbers[i]);
     		if(n!= null && n<i){
