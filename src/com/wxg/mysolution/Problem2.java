@@ -9,51 +9,37 @@ package com.wxg.mysolution;
  */
 public class Problem2 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-    	if(l1 == null)
-    		return l2;
-    	if(l2 == null)
-    		return l1;
-    	int carry;
-    	int tmp;
-    	if(l1.val + l2.val > 9){
-    		carry = 1;
-    		tmp = l1.val + l2.val - 10;
-    	}else{
-    		carry = 0;
-    		tmp = l1.val + l2.val;
-    	}
-    	ListNode result = new ListNode(tmp);
-    	ListNode tempNode = result;
-    	while(l1.next != null || l2.next != null || carry > 0){
-    		tmp = carry;
-    		if(l1.next != null){
-    			l1 = l1.next;
-    			tmp += l1.val;
-    		}
-    		if(l2.next != null){
-    			l2 = l2.next;
-    			tmp += l2.val;
-    		}
-    		if(tmp > 9){
-    			tmp = tmp - 10;
-    			carry= 1;
-    		}else
-    			carry = 0;
-    		ListNode node = new ListNode(tmp);
-    		tempNode.next = node;
-    		tempNode = tempNode.next;
-    	}
-    	return result;
-    }
-    
+        int carry =0;
+  
+         ListNode newHead = new ListNode(0);
+         ListNode p1 = l1, p2 = l2, p3=newHead;
+  
+         while(p1 != null || p2 != null){
+             if(p1 != null){
+                 carry += p1.val;
+                 p1 = p1.next;
+             }
+  
+             if(p2 != null){
+                 carry += p2.val;
+                 p2 = p2.next;
+             }
+  
+             p3.next = new ListNode(carry%10);
+             p3 = p3.next;
+             carry /= 10;
+         }
+  
+         if(carry==1) 
+             p3.next=new ListNode(1);
+  
+         return newHead.next;
+     }
 }
 
 
-class ListNode{
-	int val;
-	ListNode next;
-	ListNode(int x){
-		val = x;
-		next = null;
-	}
+class ListNode {
+     int val;
+     ListNode next;
+     ListNode(int x) { val = x; }
 }

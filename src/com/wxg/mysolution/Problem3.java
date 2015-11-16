@@ -7,33 +7,35 @@ package com.wxg.mysolution;
  * @date 2015-6-6 上午12:38:39
  */
 public class Problem3 {
-	public int lengthOfLongestSubString(String s){
+	public int lengthOfLongestSubstring(String s) {
+		int length = 0;
 		if(s == null || s.length() == 0)
 			return 0;
 		int help[] = new int[256];
-		int result = 0;
-		int tempStart = 0;
-		for(int i = 0; i<s.length(); i++){
-			char c = s.charAt(i);
-			if(help[c] == 0)
-				help[c] = i + 1; //每个数组的位置的值是其下标
-			else{    //help[c] != 0  cdd
-				if(i - tempStart > result)
-					result = i - tempStart;
-				tempStart = help[c];
-				help[c] = i + 1;
+		for(int i=0;i<help.length;i++)
+			help[i] = 0;
+		int i=0,j=1;
+		help[s.charAt(i)]++;
+		length = 1;
+		while(i < j && j<s.length()){
+			if(help[s.charAt(j)] == 0 )
+				help[s.charAt(j++)]++;
+			else{
+				if( j - i > length) 
+					length = j - i;
+				while(help[s.charAt(j)] > 0 )
+					help[s.charAt(i++)]--;
+				help[s.charAt(j++)]++;
 			}
 		}
-		
-		if(s.length() - tempStart > result)
-			result = s.length() - tempStart;
-		
-		return result;
+		if(j == s.length() && j -i > length )
+			length = j -i ;
+		return length;
 	}
 	
 	public static void main(String[] args){
-		String s = "abba";
-		System.out.println(new Problem3().lengthOfLongestSubString(s));
+		Problem3 p = new Problem3();
+		System.out.println(p.lengthOfLongestSubstring("au"));
 	}
 	
 }
