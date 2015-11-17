@@ -8,11 +8,14 @@ import java.util.List;
  *
  */
 public class Problem29 {
+    /**
+     * when
+     */
     public int divide(int dividend, int divisor) {
-    	if(dividend == 0)
-    		return 0;
     	if(divisor == 0)
-    		return Integer.MIN_VALUE;
+    		return Integer.MAX_VALUE;
+        if(divisor == 1 && dividend == Integer.MAX_VALUE)
+            return Integer.MAX_VALUE;
     	boolean isNeg = false;
     	if(dividend > 0 && divisor < 0){
     		divisor = 0 - divisor;
@@ -22,26 +25,18 @@ public class Problem29 {
     		dividend = 0 - dividend;
     		isNeg = true;
     	}
-		int result = 0;
-		int tmp = divisor,prevTemp=divisor;
-		//最初的增量,tempGap用于保存
-		int gap = divisor,tempGap=gap;
-		int step = 1, tempStep=step;
-		while(tmp <= dividend && tmp > 0){
-			tmp += gap;
-			if(tmp > dividend){
-				tmp -= gap + tempGap;
-				gap = tempGap;
-				step = tempStep;
-			}else{
-				prevTemp = tmp;
-				result += step;
-				tempGap = gap;
-				tempStep = step; //用于保存最初的变量
-				step += step;
-				gap += gap;
-			}
-		}
+
+        int result = 0;
+        long pDividend = Math.abs((long)dividend);
+        long pDivisor = Math.abs((long)divisor);
+        while (pDividend >= pDivisor){
+            int numShift = 0;
+            while (pDividend >= (pDivisor<<numShift))
+                numShift++;
+
+            result += 1<<(numShift-1);
+            pDividend -= (pDivisor<<(numShift-1));
+        }
 		
         return isNeg ? (0-result) : result;
     }
