@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class Problem29 {
     /**
-     * when
+     * This problem can be solved based on the fact that any number can be converted to the format of the following:
+     * num=a_0*2^0+a_1*2^1+a_2*2^2+...+a_n*2^n
      */
     public int divide(int dividend, int divisor) {
     	if(divisor == 0)
@@ -33,7 +34,8 @@ public class Problem29 {
             int numShift = 0;
             while (pDividend >= (pDivisor<<numShift))
                 numShift++;
-
+            //when pDividend < (pDivisor<<numShift), it means there exists one integer i
+            // dividend = i * pDivisor + j, j<pDivisor
             result += 1<<(numShift-1);
             pDividend -= (pDivisor<<(numShift-1));
         }
@@ -42,6 +44,6 @@ public class Problem29 {
     }
     
     public static void main(String[] args){
-    	System.out.println(new Problem29().divide(24, 8));
+    	System.out.println(new Problem29().divide(24, 4));
     }
 }
